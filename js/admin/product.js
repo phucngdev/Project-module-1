@@ -7,7 +7,6 @@ let imageUrlEdit = "";
 
 let productsLocalStorage = JSON.parse(localStorage.getItem("products")) || [];
 let categoryLocalStorage = JSON.parse(localStorage.getItem("category")) || [];
-let editProductLocal = JSON.parse(localStorage.getItem("editProduct")) || {};
 
 // phân trang
 const itemsPerPage = 5;
@@ -200,9 +199,9 @@ function getIndex(data) {
   );
   return editProductsIndex;
 }
-
+let itemProduct;
 function editProduct(productName) {
-  let itemProduct = getIndex(productName);
+  itemProduct = getIndex(productName);
   $("#imageEdit").src = itemProduct[0].image;
   $("#nameProEdit").value = itemProduct[0].name;
   $("#codeProEdit").value = itemProduct[0].barcode;
@@ -234,6 +233,8 @@ function editProduct(productName) {
       validateInput("#slProEdit", "#errSlEdit");
       validateInput("#descriptionProEdit", "#errDesEdit");
     } else {
+      numberPriceat = $("#patProEdit").value;
+      numberPricebf = $("#pbfProEdit").value;
       numberPriceat = new Intl.NumberFormat("vi-VN", {
         style: "currency",
         currency: "VND",
@@ -245,7 +246,12 @@ function editProduct(productName) {
       if (imageUrlEdit === "") {
         imageUrlEdit = imageUrl;
       }
-      const newData = {
+      if (fileEdit.files.length === 0) {
+        imageUrlEdit = itemProduct[0].image;
+      } else {
+        imageUrlEdit = $("#imageEdit").src;
+      }
+      let newData = {
         ...itemProduct[0],
         image: imageUrlEdit,
         name: $("#nameProEdit").value,
@@ -258,23 +264,20 @@ function editProduct(productName) {
         description: $("#descriptionProEdit").value,
         editedTime: new Date(),
       };
-      localStorage.setItem("editProduct", JSON.stringify(newData));
-      let findToSave = productsLocalStorage.find(
-        (user) => user.id === editProductLocal.id
+      let findToSaveIndex = productsLocalStorage.findIndex(
+        (product) => product.id === newData.id
       );
-      if (findToSave) {
-        let indexProduct = productsLocalStorage.indexOf(findToSave);
-        productsLocalStorage[indexProduct] = newData;
+      if (findToSaveIndex !== -1) {
+        productsLocalStorage[findToSaveIndex] = newData;
         localStorage.setItem("products", JSON.stringify(productsLocalStorage));
         $("#modalEditProduct").style.display = "none";
       }
-      editProductLocal = {};
       renderProductsLocal(productsLocalStorage);
       displayProduct(currentPage, productsLocalStorage);
       handleCurrent();
+      resetFormEdit();
     }
   });
-  // return itemProduct;
 }
 
 // submit form sửa
