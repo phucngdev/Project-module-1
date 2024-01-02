@@ -6,8 +6,6 @@ let orderLocalStorage = JSON.parse(localStorage.getItem("orders")) || [];
 let userData = JSON.parse(localStorage.getItem("users")) || [];
 let userLoginLocalStorage = JSON.parse(localStorage.getItem("userLogin")) || {};
 let userOrder = JSON.parse(localStorage.getItem("userOrder")) || [];
-console.log(userLoginLocalStorage);
-console.log(userOrder);
 
 // lấy api địa chỉ
 var citis = document.getElementById("city");
@@ -50,14 +48,10 @@ function renderCity(data) {
       dataWards.forEach((item) => {
         wards.options[wards.options.length] = new Option(item.Name, item.Id);
       });
-      // for (const w of dataWards) {
-      //   wards.options[wards.options.length] = new Option(w.Name, w.Id);
-      // }
     }
   };
 }
 
-// chuyển pricebf từ string thành number r tính tổng
 let totalProducts = 0;
 if (userLoginLocalStorage.active === "Đang hoạt động") {
   userLoginLocalStorage.cart.forEach((item) => {
@@ -72,9 +66,7 @@ if (userLoginLocalStorage.active === "Đang hoạt động") {
     totalProducts = totalProducts + numberPrice;
   });
 }
-// tạo biến tính tổng + ship
 let totalBill = totalProducts + 20000;
-// định dạng tiền r in
 totalProducts = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
@@ -90,14 +82,10 @@ let valueCity;
 let valueDistrict;
 let valueWards;
 $("#btnSubmitOrder").addEventListener("click", () => {
-  // lấy text option
-  // tỉnh
   let selectCity = citis.options[citis.selectedIndex];
   valueCity = selectCity.textContent;
-  // quận
   let selectDistrict = districts.options[districts.selectedIndex];
   valueDistrict = selectDistrict.textContent;
-  // phường
   let selectWards = wards.options[wards.selectedIndex];
   valueWards = selectWards.textContent;
   if (
@@ -126,14 +114,13 @@ $("#btnSubmitOrder").addEventListener("click", () => {
         ward: valueWards,
         products: userLoginLocalStorage.cart,
         totalBill: totalBill,
+        orderStatus: "Đang chờ xử lý",
         created: new Date(),
       };
       orderLocalStorage.unshift(newOrderUser);
       localStorage.setItem("orders", JSON.stringify(orderLocalStorage));
-      console.log(userOrder);
       userOrder.unshift(orderLocalStorage[0]);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
-      console.log(userOrder);
       const newData = {
         ...userLoginLocalStorage,
         order: userOrder,
@@ -163,7 +150,6 @@ $("#btnSubmitOrder").addEventListener("click", () => {
       orderLocalStorage.unshift(newOrder);
       localStorage.setItem("orders", JSON.stringify(orderLocalStorage));
     }
-    console.log("done");
     $("#modalSuccess").style.display = "flex";
   }
 });

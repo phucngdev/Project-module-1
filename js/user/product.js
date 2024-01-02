@@ -192,7 +192,6 @@ function addCartBtn(productID) {
   let itemProductAdd = getID(productID);
   if (userLoginLocalStorage.active === "Đang hoạt động") {
     cartUser.push(itemProductAdd[0]);
-    console.log(cartUser);
     localStorage.setItem("cartUser", JSON.stringify(cartUser));
     renderCart(cartUser);
     checkCart(cartUser);

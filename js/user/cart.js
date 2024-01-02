@@ -3,7 +3,6 @@ let $S = document.querySelectorAll.bind(document);
 
 let userLoginLocalStorage = JSON.parse(localStorage.getItem("userLogin")) || {};
 let cartLocalStorage = JSON.parse(localStorage.getItem("cart")) || [];
-console.log(cartLocalStorage);
 let userData = JSON.parse(localStorage.getItem("users")) || [];
 let cartUser = JSON.parse(localStorage.getItem("cartUser")) || [];
 

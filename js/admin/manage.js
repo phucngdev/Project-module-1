@@ -68,7 +68,6 @@ let usersLocalStore = JSON.parse(localStorage.getItem("users")) || [];
 
 function deleteUser(userId) {
   usersLocalStore = usersLocalStore.filter((user) => user.id != userId);
-  console.log(usersLocalStore);
   localStorage.setItem("users", JSON.stringify(usersLocalStore));
   renderUserLocal();
 }

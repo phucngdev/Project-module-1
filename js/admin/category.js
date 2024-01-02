@@ -116,7 +116,6 @@ $("#formAddCategory").addEventListener("submit", (e) => {
       createdTime: new Date(),
     };
     categoryLocalStorage.unshift(newCategory);
-    console.log(categoryLocalStorage);
     localStorage.setItem("category", JSON.stringify(categoryLocalStorage));
     $("#modalAddCategory").style.display = "none";
     resetForm();
@@ -146,7 +145,6 @@ function getIndex(data) {
 }
 function editCategory(categoryName) {
   let itemCategory = getIndex(categoryName);
-  console.log(itemCategory[0]);
   $("#nameEdit").value = itemCategory[0].name;
 }
 
@@ -199,7 +197,6 @@ function renderCategoryLocal(data) {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
       const categoryId = button.id;
-      console.log(categoryId);
       deleteCategory(categoryId);
     });
   });

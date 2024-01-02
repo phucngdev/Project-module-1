@@ -151,8 +151,6 @@ $("#formAddProduct").addEventListener("submit", (e) => {
       style: "currency",
       currency: "VND",
     }).format(priceat);
-    console.log(pricebf);
-    console.log(priceat);
 
     const newProduct = {
       id: uuidv4(),
@@ -205,7 +203,6 @@ function getIndex(data) {
 
 function editProduct(productName) {
   let itemProduct = getIndex(productName);
-  console.log(itemProduct[0]);
   $("#imageEdit").src = itemProduct[0].image;
   $("#nameProEdit").value = itemProduct[0].name;
   $("#codeProEdit").value = itemProduct[0].barcode;
@@ -262,15 +259,11 @@ function editProduct(productName) {
         editedTime: new Date(),
       };
       localStorage.setItem("editProduct", JSON.stringify(newData));
-      console.log(editProductLocal);
       let findToSave = productsLocalStorage.find(
         (user) => user.id === editProductLocal.id
       );
-      console.log(findToSave);
       if (findToSave) {
-        console.log("findtosave");
         let indexProduct = productsLocalStorage.indexOf(findToSave);
-        console.log(indexProduct);
         productsLocalStorage[indexProduct] = newData;
         localStorage.setItem("products", JSON.stringify(productsLocalStorage));
         $("#modalEditProduct").style.display = "none";
@@ -362,7 +355,6 @@ function renderProductsLocal(data) {
   $S(".delete-products").forEach((button) => {
     button.addEventListener("click", () => {
       const productId = button.id;
-      console.log(productId);
       deleteProduct(productId);
     });
   });
