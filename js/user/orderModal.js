@@ -1,4 +1,5 @@
 let orderLocal = JSON.parse(localStorage.getItem("orders")) || [];
+console.log("orders tất cả: ", orderLocal);
 // đóng mở modal danh sách order
 $("#btnListOrder").addEventListener("click", (e) => {
   e.stopPropagation();
@@ -19,13 +20,17 @@ window.addEventListener("click", () => {
   }
 });
 
-const filteredArray = orderLocal.filter((objOrders) => {
-  return userLoginLocalStorage.order.some(
-    (objUesr) => objUesr.id === objOrders.id
-  );
+const filteredArray = orderLocal.filter((orders) => {
+  return userLoginLocalStorage.order.find((order) => order.id === orders.id);
 });
 
+console.log("lọc order giống nhau theo id: ", filteredArray);
+
 userLoginLocalStorage.order = filteredArray;
+console.log(
+  "gán order trong user bằng cái vừa lọc: ",
+  userLoginLocalStorage.order
+);
 
 function renderListOrder() {
   const listOrder = userLoginLocalStorage.order.map((order, index) => {

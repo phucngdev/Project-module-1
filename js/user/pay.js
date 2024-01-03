@@ -3,7 +3,6 @@ let $S = document.querySelectorAll.bind(document);
 
 let cartLocalStorage = JSON.parse(localStorage.getItem("cart")) || [];
 let orderLocalStorage = JSON.parse(localStorage.getItem("orders")) || [];
-let userData = JSON.parse(localStorage.getItem("users")) || [];
 let userLoginLocalStorage = JSON.parse(localStorage.getItem("userLogin")) || {};
 let userOrder = JSON.parse(localStorage.getItem("userOrder")) || [];
 
@@ -121,11 +120,14 @@ $("#btnSubmitOrder").addEventListener("click", () => {
       localStorage.setItem("orders", JSON.stringify(orderLocalStorage));
       userOrder.unshift(orderLocalStorage[0]);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
+      // ko bt sao userLoginLocalStorage.order nó lại là cái obj
+      const arrOrderUser = Object.values(userLoginLocalStorage.order);
       const newData = {
         ...userLoginLocalStorage,
-        order: userOrder,
+        order: arrOrderUser.concat(userOrder),
       };
       localStorage.setItem("userLogin", JSON.stringify(newData));
+      let userData = JSON.parse(localStorage.getItem("users")) || [];
       const findToSave = userData.find(
         (user) => user.id === userLoginLocalStorage.id
       );

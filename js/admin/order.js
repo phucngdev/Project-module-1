@@ -76,20 +76,46 @@ function renderOrder() {
       localStorage.setItem(orderId, "bg-black");
     });
   });
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   $S(".btn-accept").forEach((button) => {
+  //     const orderId = button.id;
+  //     const storedClass = localStorage.getItem(orderId);
+  //     if (storedClass === "bg-black") {
+  //       button.classList.add("bg-black");
+  //     }
+  //   });
+  //   $S(".btn-refuse").forEach((button) => {
+  //     const orderId = button.id;
+  //     const storedClass = localStorage.getItem(orderId);
+  //     if (storedClass === "bg-black") {
+  //       button.classList.add("bg-black");
+  //     }
+  //   });
+  // });
   document.addEventListener("DOMContentLoaded", () => {
-    $S(".btn-accept").forEach((button) => {
-      const orderId = button.id;
-      const storedClass = localStorage.getItem(orderId);
-      if (storedClass === "bg-black") {
-        button.classList.add("bg-black");
-      }
-    });
-    $S(".btn-refuse").forEach((button) => {
-      const orderId = button.id;
-      const storedClass = localStorage.getItem(orderId);
-      if (storedClass === "bg-black") {
-        button.classList.add("bg-black");
-      }
+    const storedData = localStorage.getItem("buttonStatus");
+    if (storedData) {
+      const buttonStatus = JSON.parse(storedData);
+      $S(".btn-accept, .btn-refuse").forEach((button) => {
+        const orderId = button.id;
+        const storedClass = buttonStatus[orderId];
+        if (storedClass === "bg-black") {
+          button.classList.add("bg-black");
+        }
+      });
+    }
+    $S(".btn-accept, .btn-refuse").forEach((button) => {
+      button.addEventListener("click", () => {
+        const orderId = button.id;
+        const buttonStatus =
+          JSON.parse(localStorage.getItem("buttonStatus")) || {};
+        if (button.classList.contains("bg-black")) {
+          buttonStatus[orderId] = "bg-black";
+        } else {
+          delete buttonStatus[orderId];
+        }
+        localStorage.setItem("buttonStatus", JSON.stringify(buttonStatus));
+      });
     });
   });
 }
