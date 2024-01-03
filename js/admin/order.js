@@ -63,8 +63,6 @@ function renderOrder() {
       e.stopPropagation();
       const orderId = button.id;
       acceptOrder(orderId);
-      button.classList.add("bg-black");
-      localStorage.setItem(orderId, "bg-black");
     });
   });
   $S(".btn-refuse").forEach((button) => {
@@ -72,51 +70,44 @@ function renderOrder() {
       e.stopPropagation();
       const orderId = button.name;
       refuseOrder(orderId);
-      button.classList.add("bg-black");
-      localStorage.setItem(orderId, "bg-black");
     });
   });
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   $S(".btn-accept").forEach((button) => {
-  //     const orderId = button.id;
-  //     const storedClass = localStorage.getItem(orderId);
-  //     if (storedClass === "bg-black") {
-  //       button.classList.add("bg-black");
-  //     }
-  //   });
-  //   $S(".btn-refuse").forEach((button) => {
-  //     const orderId = button.id;
-  //     const storedClass = localStorage.getItem(orderId);
-  //     if (storedClass === "bg-black") {
-  //       button.classList.add("bg-black");
-  //     }
-  //   });
-  // });
   document.addEventListener("DOMContentLoaded", () => {
-    const storedData = localStorage.getItem("buttonStatus");
-    if (storedData) {
-      const buttonStatus = JSON.parse(storedData);
-      $S(".btn-accept, .btn-refuse").forEach((button) => {
-        const orderId = button.id;
-        const storedClass = buttonStatus[orderId];
-        if (storedClass === "bg-black") {
-          button.classList.add("bg-black");
-        }
-      });
-    }
-    $S(".btn-accept, .btn-refuse").forEach((button) => {
+    const buttonStatus = JSON.parse(localStorage.getItem("buttonStatus")) || {};
+    const buttonStatusRefuse =
+      JSON.parse(localStorage.getItem("buttonStatusRefuse")) || {};
+    $S(".btn-accept").forEach((button) => {
       button.addEventListener("click", () => {
         const orderId = button.id;
-        const buttonStatus =
-          JSON.parse(localStorage.getItem("buttonStatus")) || {};
-        if (button.classList.contains("bg-black")) {
-          buttonStatus[orderId] = "bg-black";
-        } else {
-          delete buttonStatus[orderId];
-        }
+        button.classList.add("bg-black");
+        buttonStatus[orderId] = "bg-black";
         localStorage.setItem("buttonStatus", JSON.stringify(buttonStatus));
       });
+      const orderId = button.id;
+      if (buttonStatus[orderId] === "bg-black") {
+        button.classList.add("bg-black");
+      }
     });
+    localStorage.setItem("buttonStatus", JSON.stringify(buttonStatus));
+    $S(".btn-refuse").forEach((button) => {
+      button.addEventListener("click", () => {
+        const orderId = button.name;
+        button.classList.add("bg-black");
+        buttonStatusRefuse[orderId] = "bg-black";
+        localStorage.setItem(
+          "buttonStatusRefuse",
+          JSON.stringify(buttonStatusRefuse)
+        );
+      });
+      const orderId = button.name;
+      if (buttonStatusRefuse[orderId] === "bg-black") {
+        button.classList.add("bg-black");
+      }
+    });
+    localStorage.setItem(
+      "buttonStatusRefuse",
+      JSON.stringify(buttonStatusRefuse)
+    );
   });
 }
 renderOrder();

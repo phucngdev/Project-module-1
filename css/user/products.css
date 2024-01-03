@@ -83,6 +83,7 @@ img {
   padding: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
     rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  cursor: pointer;
 }
 .itemProduct img {
   width: 100%;
@@ -110,6 +111,9 @@ img {
 }
 .addToCart:hover {
   background-color: rgba(66, 66, 66, 0.1);
+}
+.addToCart:active {
+  background-color: #979797;
 }
 .animation-click {
   position: absolute;
@@ -254,6 +258,9 @@ img {
   color: #fff;
   cursor: pointer;
   border: none;
+}
+.btnAddToCart:active {
+  background-color: #979797;
 }
 .nameProductCart {
   padding-left: 10px;

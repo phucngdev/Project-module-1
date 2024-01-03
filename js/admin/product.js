@@ -280,33 +280,6 @@ function editProduct(productName) {
   });
 }
 
-// submit form sửa
-// $("#formEditProduct").addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   if (
-//     $("#nameProEdit").value === "" ||
-//     $("#codeProEdit").value === "" ||
-//     $("#nccProEdit").value === "" ||
-//     $("#pbfProEdit").value === "" ||
-//     $("#patProEdit").value === "" ||
-//     $("#slProEdit").value === "" ||
-//     $("#descriptionProEdit").value === ""
-//   ) {
-//     validateInput("#nameProEdit", "#errNameEdit");
-//     validateInput("#codeProEdit", "#errCodeEdit");
-//     validateInput("#nccProEdit", "#errNccEdit");
-//     validateInput("#pbfProEdit", "#errPbfEdit");
-//     validateInput("#patProEdit", "#errPatEdit");
-//     validateInput("#slProEdit", "#errSlEdit");
-//     validateInput("#descriptionProEdit", "#errDesEdit");
-//   } else {
-//     const newData = {
-//       ...
-//     };
-//     // localStorage.setItem("userLogin", JSON.stringify(newData));
-//   }
-// });
-
 // tìm kiếm sản phẩm
 $("#searchInput").addEventListener("input", () => {
   let inputSearch = $("#searchInput").value.toLowerCase();
